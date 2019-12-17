@@ -7,7 +7,7 @@ def duplication(sentence_list, num, sentence):
         sentence_list[sentence] = num
         return False
     else:
-        print(sentence)
+        # print(sentence)
         return True
 
 
@@ -27,7 +27,7 @@ def create_synonym_dictionary(data_list, word_type, sw):
     synonym_dict = {}
     for _, text in data_list:
         wakati_word = wakati(text, word_type)
-        print(wakati_word)
+        # print(wakati_word)
         for word in wakati_word:
             synonym_list = sw.search_similar_word(word)
             if synonym_list != None:

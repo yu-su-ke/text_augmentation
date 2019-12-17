@@ -1,4 +1,5 @@
 import pandas as pd
+import tqdm
 
 from wordnet import SimilarWord
 from wakati_document import wakati
@@ -33,9 +34,9 @@ if __name__ == '__main__':
     sentence_list = {}
     num = 0
 
-    for _ in range(10):
-        with open('./document/all_approach/train_all_max.jsonl', 'a', encoding='utf-8') as json_file:
-            for label, text in data_list:
+    for _ in range(1):
+        with open('./document/train_eda.jsonl', 'a', encoding='utf-8') as json_file:
+            for label, text in tqdm(data_list):
                 new_sentence = []
                 all_wakati_word = wakati(text, '')
                 wakati_word = wakati(text, word_type)
@@ -50,7 +51,7 @@ if __name__ == '__main__':
                 new_sentence.append(random_deletion(all_wakati_word, word_dictionary, p_rd))
                 new_sentence.append(random_insertion(all_wakati_word, wakati_word, synonym_dictionary, n_ri))
                 new_sentence.append(random_swap(all_wakati_word, n_rs))
-                print(new_sentence)
+                # print(new_sentence)
 
                 for sentence in new_sentence:
                     sentence_dictionary = {"label": label, "text": sentence}

@@ -24,7 +24,7 @@ def swap_word(new_words):
         if counter > 3:
             return new_words
     new_words[random_idx_1], new_words[random_idx_2] = new_words[random_idx_2], new_words[random_idx_1]
-    print('{}を{}と交換しました。'.format(new_words[random_idx_1], new_words[random_idx_2]))
+    # print('{}を{}と交換しました。'.format(new_words[random_idx_1], new_words[random_idx_2]))
     return new_words
 
 

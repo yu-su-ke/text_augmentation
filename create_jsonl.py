@@ -3,6 +3,8 @@ import random
 
 import pandas as pd
 
+from format_text import preprocess
+
 
 def read_text(path_list):
     sentence_label = []
@@ -16,7 +18,7 @@ def read_text(path_list):
                 next(f)
                 next(f)
                 # 全角スペースや改行の削除
-                w = f.read().replace('\u3000', '').replace('\n', '')
+                w = preprocess(f.read())
 
                 label = path_list.index(p_list)
                 sentence_label.append([label, w])

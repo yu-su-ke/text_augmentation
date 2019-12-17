@@ -20,7 +20,6 @@ def random_deletion(all_wakati_word, word_dictionary, p):
             r = random.uniform(0, 1)
             if r > p:
                 new_words.append(w)
-        new_words.append(w)
 
     # 全ての単語を削除した場合、1単語だけ返す
     if len(new_words) == 0:
