@@ -1,5 +1,4 @@
 import pandas as pd
-import tqdm
 
 from wordnet import SimilarWord
 from wakati_document import wakati
@@ -36,7 +35,7 @@ if __name__ == '__main__':
 
     for _ in range(1):
         with open('./document/train_eda.jsonl', 'a', encoding='utf-8') as json_file:
-            for label, text in tqdm(data_list):
+            for label, text in data_list:
                 new_sentence = []
                 all_wakati_word = wakati(text, '')
                 wakati_word = wakati(text, word_type)
