@@ -2,6 +2,7 @@
 .idea
 document/*/
 wnjpn.db
+train_eda.jsonl
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
