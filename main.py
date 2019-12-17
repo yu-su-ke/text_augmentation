@@ -3,10 +3,10 @@ import pandas as pd
 from wordnet import SimilarWord
 from wakati_document import wakati
 from function import duplication, create_synonym_dictionary, create_word_dictionary
-from random_delete import random_deletion
-from random_insert import random_insertion
-from random_swap import random_swap
-from replace_synonym import synonym_replacement
+from EDA.random_delete import random_deletion
+from EDA.random_insert import random_insertion
+from EDA.random_swap import random_swap
+from EDA.replace_synonym import synonym_replacement
 
 
 if __name__ == '__main__':
