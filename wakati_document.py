@@ -16,28 +16,29 @@ def wakati(text, part):
     node = mecab.parseToNode(text)
     output = []
     # カウントからはじく単語を指定
-    stop_words = [u'てる', u'いる', u'なる', u'れる', u'する', u'ある', u'こと', u'これ', u'さん', u'して',
-                  u'くれる', u'やる', u'くださる', u'そう', u'せる', u'した', u'思う', u'ます',
-                  u'それ', u'ここ', u'ちゃん', u'くん', u'って', u'て', u'に', u'を', u'は', u'の', u'が', u'と', u'た', u'し', u'で',
-                  u'ない', u'も', u'な', u'い', u'か', u'ので', u'よう', u'から', u'けど',
-                  'https', 't', '.', '/', '://', 'co', '@', '_', 'http',
-                  '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
-                  '()', '！']
+    # stop_words = [u'てる', u'いる', u'なる', u'れる', u'する', u'ある', u'こと', u'これ', u'さん', u'して',
+    #               u'くれる', u'やる', u'くださる', u'そう', u'せる', u'した', u'思う', u'ます',
+    #               u'それ', u'ここ', u'ちゃん', u'くん', u'って', u'て', u'に', u'を', u'は', u'の', u'が', u'と', u'た', u'し', u'で',
+    #               u'ない', u'も', u'な', u'い', u'か', u'ので', u'よう', u'から', u'けど',
+    #               'https', 't', '.', '/', '://', 'co', '@', '_', 'http',
+    #               '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+    #               '()', '！']
+    stop_words = ['']
     while node:
         if node.surface != "":  # ヘッダとフッタを除外
-            if part == '名詞':
+            if part == 'noun':
                 word_type = node.feature.split(",")[0]
                 if word_type in [part] and node.surface not in stop_words:
                     output.append(node.surface)
-            elif part == '動詞':
+            elif part == 'verb':
                 word_type = node.feature.split(",")[0]
                 if word_type in [part] and node.surface not in stop_words:
                     output.append(node.surface)
-            elif part == '形容詞':
+            elif part == 'adjective':
                 word_type = node.feature.split(",")[0]
                 if word_type in [part] and node.surface not in stop_words:
                     output.append(node.surface)
-            elif part == '固有名詞':
+            elif part == 'proper_noun':
                 word_type = node.feature.split(",")[1]
                 if word_type in [part] and node.surface not in stop_words:
                     output.append(node.surface)

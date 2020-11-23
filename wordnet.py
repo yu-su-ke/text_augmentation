@@ -6,7 +6,7 @@ import pandas as pd
 
 class SimilarWord:
     def __init__(self):
-        self.connection = sqlite3.connect("./wnjpn.db")  # データベース
+        self.connection = sqlite3.connect("./database/wnjpn.db")  # データベース
 
     def search_similar_word(self, word):
         # 問い合わせた単語がWordnetに存在するかを確認する
@@ -38,17 +38,20 @@ class SimilarWord:
                 # print('%sつめの概念 : %s' % (number_concept, row1[0]))
                 pass
             # 意味検索
-            search_meaning = self.connection.execute("select def from synset_def where (synset='%s' and lang='jpn')" % concept_set)
+            search_meaning = self.connection.execute(
+                "select def from synset_def where (synset='%s' and lang='jpn')" % concept_set)
             number_meaning = 1
             for row2 in search_meaning:
                 # print("意味%s : %s" % (number_meaning, row2[0]))
                 number_meaning += 1
             # 類義語検索
-            search_word = self.connection.execute("select wordid from sense where (synset='%s' and wordid!=%s)" % (concept_set, word_id))
+            search_word = self.connection.execute(
+                "select wordid from sense where (synset='%s' and wordid!=%s)" % (concept_set, word_id))
             number_word = 1
             for row3 in search_word:
                 target_word_id = row3[0]
-                search_word_detail = self.connection.execute("select lemma from word where wordid=%s AND lang='jpn'" % target_word_id)
+                search_word_detail = self.connection.execute(
+                    "select lemma from word where wordid=%s AND lang='jpn'" % target_word_id)
                 for row3_1 in search_word_detail:
                     # 類義語から英語を弾いた上で上位5件のものを保存
                     if number_word <= 3:
@@ -56,11 +59,7 @@ class SimilarWord:
                         synonym_list.append(row3_1[0])
                         number_word += 1
 
-            # print('\n')
             number_concept += 1
-            # 最初の概念を読み込むとき
-            # return synonym_list
-        # 全ての概念を読み込む場合
         return synonym_list
 
     def similar_word(self, data):
