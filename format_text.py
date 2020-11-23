@@ -4,8 +4,17 @@ import sys
 import emoji
 
 
-def clean_text(x):
-    x = str(x)
+def clean_text(text):
+    """ 改行やタブ、タグを削除する
+
+     Args:
+         text (str): 文章
+
+     Returns:
+         str: タスク実行後の文章
+
+     """
+    x = str(text)
     x = x.replace('\n', '')  # 改行削除
     x = x.replace('\t', '')  # タブ削除
     x = x.replace('\r', '')
@@ -24,11 +33,20 @@ def clean_text(x):
     return x
 
 
-def rm_puncts(text):
-    puncts = r',.":)・《》「」『』！(-!?|;\'$&/[]>%=#*+\\•~@£·_{}©^®`<→°€™›♥←×§″′Â█½à…“★”–●â►−¢²¬░¶↑±¿▾═¦║―¥▓—‹─▒：' \
+def rm_symbol(text):
+    """ 特殊文字、記号などを削除する
+
+     Args:
+         text (str): 文章
+
+     Returns:
+         str: タスク実行後の文章
+
+     """
+    symbols = r',.":)・《》「」『』！(-!?|;\'$&/[]>%=#*+\\•~@£·_{}©^®`<→°€™›♥←×§″′Â█½à…“★”–●â►−¢²¬░¶↑±¿▾═¦║―¥▓—‹─▒：' \
              r'¼⊕▼▪†■’▀¨▄♫☆é¯♦¤▲è¸¾Ã⋅‘∞∙）↓、│（»，♪╩╚³・╦╣╔╗▬❤ïØ¹≤‡√。【】〜'
-    for punct in puncts:
-        text = text.replace(punct, '')
+    for symbol in symbols:
+        text = text.replace(symbol, '')
     return text
 
 
@@ -36,6 +54,15 @@ non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), '')
 
 
 def rm_spaces(text):
+    """ ユニコード文字などを削除する
+
+    Args:
+        text (str): 文章
+
+    Returns:
+        str: タスク実行後の文章
+
+    """
     spaces = ['\u200b', '\u200e', '\u202a', '\u2009', '\u2028', '\u202c', '\ufeff', '\uf0d8', '\u2061', '\u3000',
               '\u200d', '\u0602', '\ue32e', '\U000feb0f', '´༎ຶ۝༎ຶ ', '۝', '\U000feb60', '\U0001f90d', '\U0001fa70',
               '\U0001f9cf', '\U0001fa90', '\U0001f9a6', '\U0001f9a9',
@@ -50,17 +77,33 @@ def rm_spaces(text):
               ]
     for space in spaces:
         text = text.replace(space, ' ')
-
     text = text.translate(non_bmp_map)
-
     return text
 
 
 def remove_emoji(text):
+    """ 絵文字を削除する
+
+    Args:
+        text (str): 文章
+
+    Returns:
+        str: タスク実行後の文章
+
+    """
     return ''.join(c for c in text if c not in emoji.UNICODE_EMOJI)
 
 
 def replace_num(text):
+    """ 数字をアノニマス化する
+
+    Args:
+        text (str): 文章
+
+    Returns:
+        str: タスク実行後の文章
+
+    """
     text = re.sub('[0-9]{5,}', '#####', text)
     text = re.sub('[0-9]{4}', '####', text)
     text = re.sub('[0-9]{3}', '###', text)
@@ -73,7 +116,7 @@ def replace_num(text):
 
 
 def preprocess(text):
-    text = rm_puncts(text)
+    text = rm_symbol(text)
     text = rm_spaces(text)
     text = clean_text(text)
     text = remove_emoji(text)

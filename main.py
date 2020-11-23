@@ -14,11 +14,12 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--target-path', type=str, default='document/sample.jsonl', help='target file path')
     parser.add_argument('--word-class', type=str, default='', help='proper_noun, noun, verb, adjective')
-    parser.add_argument('--alpha-sr', type=float, default='0.1', help='parameter of alpha for synonym replace')
-    parser.add_argument('--alpha-rd', type=float, default='0.1', help='parameter of alpha for random deletion')
-    parser.add_argument('--alpha-ri', type=float, default='0.1', help='parameter of alpha for random insertion')
-    parser.add_argument('--alpha-rs', type=float, default='0.1', help='parameter of alpha for random swap')
+    parser.add_argument('--alpha-sr', type=float, help='parameter of alpha for synonym replace')
+    parser.add_argument('--alpha-rd', type=float, help='parameter of alpha for random deletion')
+    parser.add_argument('--alpha-ri', type=float, help='parameter of alpha for random insertion')
+    parser.add_argument('--alpha-rs', type=float, help='parameter of alpha for random swap')
     parser.add_argument('--num-aug', type=int, default='9', help='number of augment per sentence')
+    parser.add_argument('--num-exe', type=int, default='1', help='number of executions')
 
     opt = parser.parse_args()
 
@@ -34,12 +35,13 @@ if __name__ == '__main__':
     sentence_list = {}
     num = 0
     with open('./document/result.jsonl', 'w', encoding='utf-8') as json_file:
-        for _ in range(1):
+        for _ in range(opt.num_exe):
             for label, text in data_list:
                 new_sentence = []
                 all_wakati_word = wakati(text, '')      # 全ての品詞を対象とした分かち書きリスト
                 target_wakati_word = wakati(text, opt.word_class)      # ターゲットの品詞のみを分かち書きしたリスト
-
+                print(opt.word_class)
+                print(all_wakati_word, target_wakati_word)
                 num_words = len(target_wakati_word)
                 if opt.alpha_sr is not None:
                     n_sr = max(1, int(opt.alpha_sr * num_words))
