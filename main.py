@@ -1,13 +1,19 @@
 import argparse
+import logging
+import os
 
 import pandas as pd
+from tqdm import tqdm
 
-from wakati_document import wakati
-from function import duplication, create_synonym_dictionary, create_word_dictionary
 from EDA.random_delete import random_deletion
 from EDA.random_insert import random_insertion
 from EDA.random_swap import random_swap
 from EDA.replace_synonym import synonym_replacement
+from function import duplication, create_synonym_dictionary, create_word_dictionary
+from wakati_document import wakati
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 if __name__ == '__main__':
@@ -34,14 +40,15 @@ if __name__ == '__main__':
     # ダブり検知用の辞書
     sentence_list = {}
     num = 0
-    with open('./document/result.jsonl', 'w', encoding='utf-8') as json_file:
-        for _ in range(opt.num_exe):
-            for label, text in data_list:
+    # 保存ファイル用の名前抽出
+    save_file_name = './document/{}_result.jsonl'.format(os.path.splitext(os.path.basename(opt.target_path))[0])
+    with open(save_file_name, 'w', encoding='utf-8') as json_file:
+        for i in range(opt.num_exe):
+            logger.info(f'{i+1}回目の実行')
+            for label, text in tqdm(data_list):
                 new_sentence = []
                 all_wakati_word = wakati(text, '')      # 全ての品詞を対象とした分かち書きリスト
                 target_wakati_word = wakati(text, opt.word_class)      # ターゲットの品詞のみを分かち書きしたリスト
-                print(opt.word_class)
-                print(all_wakati_word, target_wakati_word)
                 num_words = len(target_wakati_word)
                 if opt.alpha_sr is not None:
                     n_sr = max(1, int(opt.alpha_sr * num_words))
