@@ -23,6 +23,7 @@ jsonlファイルの形式は以下の通り。
 {"label": 1, "text": "(任意の文章)"}
 {"label": 2, "text": "(任意の文章)"}
 ︙
+{"label": 1, "text": "(任意の文章)"}
 ```
 
 上記の手順が済んだら以下のコマンドを実行する。  
@@ -72,4 +73,5 @@ iPhoneには動画撮影機能が付いているが、その機能を使って�
 
 
 ## 参考文献
-[1] J. Wei and K. Zou, “EDA: Easy data augmentation techniques for boosting performance on text classification tasks,” Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP), pp. 6382–6388, 2019, doi: 10.18653/v1/d19-1670.
+[1] J. Wei and K. Zou, "EDA: Easy data augmentation techniques for boosting performance on text classification tasks," Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP), pp. 6382–6388, 2019, doi: 10.18653/v1/d19-1670.  
+[2] RONDHUIT Co, Ltd. "livedoor ニュースコーパス", https://www.rondhuit.com/download.html#ldcc .
