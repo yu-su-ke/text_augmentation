@@ -1,40 +1,52 @@
 # EDA Text Augmentation
-[EDA: Easy Data Augmentation Techniques for Boosting Performance on Text Classification Tasks](https://arxiv.org/pdf/1901.11196.pdf)  
+[EDA: Easy Data Augmentation Techniques for Boosting Performance on Text Classification Tasks](https://arxiv.org/abs/1901.11196)  
 を参考に日本語の文章を対象としてText Augmentationを行う。  
 行うタスクは、類義語置換・単語削除・単語スワップ・類義語挿入の4つである。  
 
 
 ## 環境構築
+### 1. Install library
 Python >= 3.7.0 でその他ライブラリのインストールは以下のコマンドを実行する。  
 ```shell script
 $ pip install -r requirements.txt
 ```
 
-wordnetのインストール
+### 1. Install wordnet
+[日本語 WordNet](http://compling.hss.ntu.edu.sg/wnja/)のJapanese Wordnet and English WordNet in an sqlite3 databaseをインストールする。  
+以下のシェルスクリプトを実行すると自動で設置する。
 ```shell script
 $ cd database
 $ sh download_wordnet.sh
 ```
 
-documentフォルダの中に任意のjsonlファイルを保存する。  
+### 1. Create data
+`document`フォルダの中に任意のjsonlファイルを保存する。  
 jsonlファイルの形式は以下の通り。
 ```json
-{"label": 0, "text": "(任意の文章)"}
-{"label": 1, "text": "(任意の文章)"}
-{"label": 2, "text": "(任意の文章)"}
+{"label": 0, "text": "任意の文章"}
+{"label": 1, "text": "任意の文章"}
+{"label": 2, "text": "任意の文章"}
 ︙
-{"label": 1, "text": "(任意の文章)"}
+{"label": 1, "text": "任意の文章"}
 ```
 
+### 1. Augment
 上記の手順が済んだら以下のコマンドを実行する。  
-処理の終了後にdocument内にresult.jsonlが保存される。
+処理の終了後に`document`内に`result.jsonl`が保存される。
 ```shell script
-python main.py --alpha-sr 0.1 --alpha-rd 0.1 --alpha-ri 0.1 --alpha-rs 0.1 --word-class noun
+$ python main.py --alpha-sr 0.1 --alpha-rd 0.1 --alpha-ri 0.1 --alpha-rs 0.1 --word-class noun
+```
+
+### 1. Extra
+テキストの分かち書き時にストップワードを設けたい場合は、`data`内の`stop_word.yaml`を参考に用意する。  
+用意したストップワードを適用するには、実行時にコマンドを追加する。  
+```shell script
+$ python main.py --alpha-sr 0.1 --alpha-rd 0.1 --alpha-ri 0.1 --alpha-rs 0.1 --word-class noun --stop-word data/stop_word.yaml
 ```
 
 
 ## 実行例
-元文章
+### 元文章
 ```
 iPhoneには動画撮影機能が付いているが、その機能を使って動画を撮影し、それを投稿してみんなで楽しんでしまおうというSNSがあるので紹介しよう。
 ````
