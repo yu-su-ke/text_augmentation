@@ -48,6 +48,9 @@ if __name__ == '__main__':
             for label, text in tqdm(data_list):
                 new_sentence = []
                 all_wakati_word = wakati(text, '')      # 全ての品詞を対象とした分かち書きリスト
+                # リスト内が1単語以下の場合は処理を打ち切る
+                if len(all_wakati_word) <= 1:
+                    continue
                 target_wakati_word = wakati(text, opt.word_class)      # ターゲットの品詞のみを分かち書きしたリスト
                 num_words = len(target_wakati_word)
                 if opt.alpha_sr is not None:
